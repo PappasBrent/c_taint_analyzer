@@ -8,5 +8,6 @@ namespace c_taint {
 class ASTConsumer : public clang::ASTConsumer {
     public:
         ASTConsumer(clang::CompilerInstance &CI);
+        void HandleTranslationUnit(clang::ASTContext &Ctx) override;
 };
 }
