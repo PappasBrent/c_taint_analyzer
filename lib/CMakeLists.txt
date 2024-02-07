@@ -1,6 +1,8 @@
 add_library(c_taint SHARED
         ASTConsumer.cc
+        FindSanitizersVisitor.cc
         PluginASTAction.cc
+        Utils.cc
 )
 
 target_include_directories(c_taint PUBLIC
