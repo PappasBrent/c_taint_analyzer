@@ -13,6 +13,7 @@ void ASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
                 const auto TUD = Ctx.getTranslationUnitDecl();
                 const auto &PP = Ctx.getPrintingPolicy();
                 TUD->print(llvm::outs(), PP);
+                return;
         }
 }
 }
