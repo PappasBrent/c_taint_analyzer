@@ -3,20 +3,14 @@
 #include "clang/Frontend/FrontendAction.h"
 #include "clang/Frontend/FrontendPluginRegistry.h"
 #include "llvm/ADT/StringRef.h"
-#include <llvm-17/llvm/Support/raw_ostream.h>
 #include <memory>
 
 namespace c_taint {
 
-// class ASTConsumer : public clang::ASTConsumer {
-//     public:
-//         ASTConsumer(clang::CompilerInstance &CI) {
-//                 llvm::outs() << "Hello, world!\n";
-//         }
-// };
-
 class PluginASTAction : public clang::PluginASTAction {
     public:
+        bool Unparse = false;
+
         PluginASTAction()
                 : clang::PluginASTAction() {
         }
@@ -28,13 +22,18 @@ class PluginASTAction : public clang::PluginASTAction {
     private:
         bool ParseArgs(clang::CompilerInstance const &,
                        std::vector<std::string> const &Args) override {
+                for (auto &Arg : Args) {
+                        Unparse |= Arg == "--unparse";
+                }
                 return true;
         }
 
         std::unique_ptr<clang::ASTConsumer>
         CreateASTConsumer(clang::CompilerInstance &CI,
                           llvm::StringRef InFile) override {
-                return std::make_unique<ASTConsumer>(CI);
+                (void)CI;
+                (void)InFile;
+                return std::make_unique<ASTConsumer>(Unparse);
         }
 
         clang::PluginASTAction::ActionType getActionType() override {
