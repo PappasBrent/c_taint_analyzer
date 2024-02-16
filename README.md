@@ -71,11 +71,22 @@ The following instructions assume an Ubuntu 22.04 LTS operating system:
 
 ## Usage
 
+### Unparser
+
+To run the unparser on `some/program.c`, run Clang and load the plugin as
+follows:
+
+```bash
+clang-17 -fplugin=build/lib/libc_taint.so -fsyntax-only -Xclang -plugin-arg-c_taint_analyzer -Xclang --unparse some/program.c
+```
+
+## Taint analyzer
+
 To run the taint analyzer on `some/program.c`, run Clang and load the plugin as
 follows:
 
-```console
-clang-17 -fplugin=build/lib/libc_taint.so -fsyntax-only test/main_void.c
+```bash
+clang-17 -fplugin=build/lib/libc_taint.so -fsyntax-only some/program.c
 ```
 
 ## Development
