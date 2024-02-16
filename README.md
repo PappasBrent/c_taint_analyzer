@@ -103,3 +103,17 @@ following command:
 ```bash
 sudo apt install clang-format
 ```
+
+## Testing
+
+To run the taint analyzer and unparsers' tests, first [build the
+project](#building-the-clang-plugin). Then navigate into the `build/test`
+directory and run `ctest` to run the tests:
+
+```bash
+cd build/test
+ctest
+```
+
+Our test scripts assume that you have `ctest`, `bash`, and `diff` installed and
+that your PATH environment variable points to them.
