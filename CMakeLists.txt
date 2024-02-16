@@ -13,3 +13,4 @@ find_package(Clang 17 REQUIRED CONFIG)
 find_package(LLVM 17 REQUIRED CONFIG)
 
 add_subdirectory(lib)
+add_subdirectory(test)
