@@ -22,16 +22,16 @@ The following instructions assume an Ubuntu 22.04 LTS operating system:
 
 - Make
 
-```console
-    sudo apt install make
-```
+  ```bash
+  sudo apt install make
+  ```
 
 - CMake 3.28.1 (click [here](https://apt.kitware.com/) for download and install
   instructions)
 
 - [LLVM 17 and Clang 17](https://apt.llvm.org/):
 
-  ```console
+  ```bash
   wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
   sudo apt install llvm-17 clang-17 libclang-17-dev
   ```
@@ -40,7 +40,7 @@ The following instructions assume an Ubuntu 22.04 LTS operating system:
 
 1. Configure the plugin:
 
-    ```console
+    ```bash
     cmake \
         -DCMAKE_C_COMPILER=/usr/bin/clang-17 \
         -DCMAKE_CXX_COMPILER=/usr/bin/clang++-17 \
@@ -53,19 +53,19 @@ The following instructions assume an Ubuntu 22.04 LTS operating system:
     or (using
     [`CMakePresets.json`](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html))
 
-    ```console
+    ```bash
     cmake --preset configure-make-debug
     ```
 
 1. Build the plugin:
 
-    ```console
+    ```bash
     cmake --build build
     ```
 
     or (using `CMakePresets.json`)
 
-    ```console
+    ```bash
     cmake --build --preset build-make-debug
     ```
 
@@ -100,6 +100,6 @@ like to contribute, please ensure that you've formatted your code with
 it. Assuming you are on Ubuntu, you can download `clang-format` with the
 following command:
 
-```console
+```bash
 sudo apt install clang-format
 ```
