@@ -9,8 +9,15 @@ void sanitize(int *x){
 
 int main(void){
     int x;
+    int y;
     scanf("%d", &x);
-    sanitize(&x)
+    while(x < 10){
+        y = x + 5;
+        x = x + 1;
+    }
+    
+    sanitize(&x);
+    sanitize(&y);
 
     return 0;
 }

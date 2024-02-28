@@ -9,8 +9,11 @@ void sanitize(int *x){
 
 int main(void){
     int x;
+    int y;
     scanf("%d", &x);
-    sanitize(&x)
+    y = x;
+    sanitize(&x);
+    sanitize(&y);
 
     return 0;
 }
