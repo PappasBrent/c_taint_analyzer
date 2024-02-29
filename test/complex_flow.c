@@ -1,23 +1,23 @@
 #include <stdio.h>
 
-
-void sanitize(int *x){
-    if(*x != 0){
-        *x = 0;
-    }
+void sanitize(int *x) {
+        if (*x != 0) {
+                *x = 0;
+        } else {
+        }
 }
 
-int main(void){
-    int x;
-    int y;
-    scanf("%d", &x);
-    while(x < 10){
-        y = x + 5;
-        x = x + 1;
-    }
-    
-    sanitize(&x);
-    sanitize(&y);
+int main(void) {
+        int x;
+        int y;
+        scanf("%d", &x);
+        while (x < 10) {
+                y = x + 5;
+                x = x + 1;
+        }
 
-    return 0;
+        sanitize(&x);
+        sanitize(&y);
+
+        return 0;
 }

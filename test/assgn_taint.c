@@ -1,18 +1,18 @@
 #include <stdio.h>
 
-
-void sanitize(int *x){
-    if(*x != 0){
-        *x = 0;
-    }
+void sanitize(int *x) {
+        if (*x != 0) {
+                *x = 0;
+        } else {
+        }
 }
 
-int main(void){
-    int x;
-    int y;
-    scanf("%d", &x);
-    
-    y = x;
-    y = 5;
-    return 0;
+int main(void) {
+        int x;
+        int y;
+        scanf("%d", &x);
+
+        y = x;
+        y = 5;
+        return 0;
 }
