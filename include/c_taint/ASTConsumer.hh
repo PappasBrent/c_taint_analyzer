@@ -2,11 +2,13 @@
 
 #include "clang/AST/ASTConsumer.h"
 #include "clang/AST/ASTContext.h"
-#include "clang/Frontend/CompilerInstance.h"
 
 namespace c_taint {
 class ASTConsumer : public clang::ASTConsumer {
     public:
-        ASTConsumer(clang::CompilerInstance &CI);
+        bool Unparse = false;
+
+        ASTConsumer(bool Unparse);
+        void HandleTranslationUnit(clang::ASTContext &Ctx) override;
 };
 }

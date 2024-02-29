@@ -1,9 +1,19 @@
 #include "c_taint/ASTConsumer.hh"
-#include <llvm-17/llvm/Support/raw_ostream.h>
+#include "clang/AST/ASTContext.h"
+#include <llvm/Support/raw_ostream.h>
 
 namespace c_taint {
-ASTConsumer::ASTConsumer(clang::CompilerInstance &CI) {
-        (void)CI;
-        llvm::outs() << "Hello, world!\n";
+
+ASTConsumer::ASTConsumer(bool Unparse)
+        : Unparse(Unparse) {
+}
+
+void ASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
+        if (Unparse) {
+                const auto TUD = Ctx.getTranslationUnitDecl();
+                const auto &PP = Ctx.getPrintingPolicy();
+                TUD->print(llvm::outs(), PP);
+                return;
+        }
 }
 }
