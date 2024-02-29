@@ -3,6 +3,7 @@
 void sanitize(int *x) {
         if (*x == -2 || (*x > 10 && (x + x < 39))) {
                 *x = *x + *x;
+        } else {
         }
 }
 
