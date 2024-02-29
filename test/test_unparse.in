@@ -1,13 +1,15 @@
 #!/usr/bin/bash
 
-# Diff the output of the unparser to the output of the cat command, ignoring
-# whitespace. We use sed to remove preprocessed headers because these make it
-# difficult to do a direct diff.
+# Diff the output of the unparser to the contents of the original file. We
+# format each result before diffing them to avoid comparison issues due to space
+# and newline placement. We use sed to remove preprocessed headers because these
+# are not included in the contents of the original file.
 
 diff --ignore-all-space --ignore-blank-lines \
     <(clang-17 -fplugin=@CMAKE_BINARY_DIR@/lib/libc_taint.so \
     -fsyntax-only -Xclang -plugin-arg-c_taint_analyzer \
     -Xclang --unparse @CMAKE_SOURCE_DIR@/test/$1 \
-        | sed -n -E -e '/sanitize/,$ p') \
-    <(cat @CMAKE_SOURCE_DIR@/test/$1 \
+        | sed -n -E -e '/sanitize/,$ p' \
+        | clang-format) \
+    <(clang-format @CMAKE_SOURCE_DIR@/test/$1 \
         | sed -n -E -e '/sanitize/,$ p')
