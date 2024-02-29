@@ -1,8 +1,7 @@
 #include <stdio.h>
 
 void sanitize(int *x) {
-        while (*x > 0)
-        {
+        while (*x > 0) {
                 *x = *x - 1;
         }
 }

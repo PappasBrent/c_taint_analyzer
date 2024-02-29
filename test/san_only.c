@@ -1,17 +1,15 @@
 #include <stdio.h>
 
 void sanitize(int *x) {
-    if(*x != 0){
-        *x = 0;
-    }
+        if (*x != 0) {
+                *x = 0;
+        }
 }
 
 int main(void) {
-    
-    int x;
+        int x;
 
-    sanitize(&x);
+        sanitize(&x);
 
-
-    return 0;
+        return 0;
 }
