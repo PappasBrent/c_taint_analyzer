@@ -1,4 +1,4 @@
-#include "c_taint/ASTConsumer.hh"
+#include "c_taint/UnparserASTConsumer.hh"
 #include "clang/Frontend/CompilerInstance.h"
 #include "clang/Frontend/FrontendAction.h"
 #include "clang/Frontend/FrontendPluginRegistry.h"
@@ -33,7 +33,7 @@ class PluginASTAction : public clang::PluginASTAction {
                           llvm::StringRef InFile) override {
                 (void)CI;
                 (void)InFile;
-                return std::make_unique<ASTConsumer>(Unparse);
+                return std::make_unique<UnparserASTConsumer>();
         }
 
         clang::PluginASTAction::ActionType getActionType() override {
