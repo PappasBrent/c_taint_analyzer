@@ -13,4 +13,7 @@ find_package(Clang 17 REQUIRED CONFIG)
 find_package(LLVM 17 REQUIRED CONFIG)
 
 add_subdirectory(lib)
+
+enable_testing()
+include(AddLLVM)        # For LLVM lit test suite.
 add_subdirectory(test)
