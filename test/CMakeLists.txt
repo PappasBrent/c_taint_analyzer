@@ -1,22 +1,28 @@
-include(CTest)
+if(LLVM_EXTERNAL_LIT)
+  get_filename_component(LLVM_LIT_TOOLS_DIR "${LLVM_EXTERNAL_LIT}" DIRECTORY)
+  find_program(FILECHECK_PATH FileCheck HINTS "${LLVM_LIT_TOOLS_DIR}")
+else()
+  find_program(FILECHECK_PATH FileCheck)
+endif()
 
-configure_file(test_unparse.in test_unparse @ONLY)
+if(FILECHECK_PATH STREQUAL "FILECHECK_PATH-NOTFOUND")
+  message(FATAL_ERROR "Could not find FileCheck")
+endif()
 
-add_test(unparse_assgn_p bash ./test_unparse assgn_p.c)
-add_test(unparse_assgn_san bash ./test_unparse assgn_san.c)
-add_test(unparse_assgn_taint bash ./test_unparse assgn_taint.c)
-add_test(unparse_assign bash ./test_unparse assign.c)
-add_test(unparse_bin_expr bash ./test_unparse bin_expr.c)
-add_test(unparse_combools bash ./test_unparse combools.c)
-add_test(unparse_complex_flow bash ./test_unparse complex_flow.c)
-add_test(unparse_decls bash ./test_unparse decls.c)
-add_test(unparse_fix_flow bash ./test_unparse fix_flow.c)
-add_test(unparse_if bash ./test_unparse if.c)
-add_test(unparse_if_then_else bash ./test_unparse if_then_else.c)
-add_test(unparse_returns bash ./test_unparse returns.c)
-add_test(unparse_sanitize_main bash ./test_unparse sanitize_main.c)
-add_test(unparse_scanf_sanitize bash ./test_unparse scanf_sanitize.c)
-add_test(unparse_skip bash ./test_unparse skip.c)
-add_test(unparse_tainted bash ./test_unparse tainted.c)
-add_test(unparse_unsan bash ./test_unparse unsan.c)
-add_test(unparse_while bash ./test_unparse while.c)
+configure_lit_site_cfg(
+  ${CMAKE_CURRENT_SOURCE_DIR}/lit.site.cfg.py.in
+  ${CMAKE_CURRENT_BINARY_DIR}/lit.site.cfg.py
+  MAIN_CONFIG
+  ${CMAKE_CURRENT_SOURCE_DIR}/lit.cfg.py
+)
+
+set(C_TAINT_TEST_DEPENDS c_taint)
+
+add_lit_testsuite(check-c-taint "Running C_Taint regression tests"
+  ${CMAKE_CURRENT_BINARY_DIR}
+  DEPENDS ${C_TAINT_TEST_DEPENDS}
+)
+
+set_target_properties(check-c-taint PROPERTIES FOLDER "Tests")
+
+add_lit_testsuites(C_Taint ${CMAKE_CURRENT_SOURCE_DIR} DEPENDS ${C_TAINT_TEST_DEPENDS})

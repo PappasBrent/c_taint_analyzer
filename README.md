@@ -36,6 +36,27 @@ The following instructions assume an Ubuntu 22.04 LTS operating system:
   sudo apt install llvm-17 clang-17 libclang-17-dev
   ```
 
+- [LLVM Lit](https://llvm.org/docs/CommandGuide/lit.html)
+
+  ```bash
+  https://pypi.org/project/lit
+  ```
+
+  After installing `lit`, change your  `CMakeLists.txt` to point to your
+  installation of `lit`. For example, if you installed `lit` to
+  `/home/me/.local/lit`, then you would change the following line of
+  `CMakeLists.txt`:
+
+  ```txt
+  "LLVM_EXTERNAL_LIT": "/path/to/lit"
+  ```
+
+  to
+
+  ```txt
+  "LLVM_EXTERNAL_LIT": "/home/me/.local/lit"
+  ```
+
 ### Building the Clang plugin
 
 1. Configure the plugin:
@@ -46,9 +67,12 @@ The following instructions assume an Ubuntu 22.04 LTS operating system:
         -DCMAKE_CXX_COMPILER=/usr/bin/clang++-17 \
         -DClang_DIR=/usr/lib/cmake/clang-17 \
         -DLLVM_DIR=/usr/include/llvm-17 \
+        -DLLVM_EXTERNAL_LIT=/path/to/lit \
         -B build \
         .
     ```
+
+    where `/path/to/lit` is the path to your installation of LLVM `lit`.
 
     or (using
     [`CMakePresets.json`](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html))
@@ -110,14 +134,9 @@ Please follow the instructions listed in the [Development](#development) section
 to install `clang-format` before running the project's tests, because the
 unparser tests rely on it to accidental failures due to whitespace.
 
-To run the taint analyzer and unparsers' tests, first [build the
-project](#building-the-clang-plugin). Then navigate into the `build/test`
-directory and run `ctest` to run the tests:
+To run the taint analyzer and unparsers' tests, first configure the project,
+then build the its `check-c-taint` target like so:
 
 ```bash
-cd build/test
-ctest
+cmake --build build -t check-c-taint
 ```
-
-Our test scripts assume that you have `ctest`, `bash`, and `diff` installed and
-that your PATH environment variable points to them.
