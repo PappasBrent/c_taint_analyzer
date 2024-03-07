@@ -1,6 +1,7 @@
 add_library(c_taint SHARED
-        UnparserASTConsumer.cc
+        CTaintASTConsumer.cc
         CTaintPluginASTAction.cc
+        UnparserASTConsumer.cc
 )
 
 target_include_directories(c_taint PUBLIC
