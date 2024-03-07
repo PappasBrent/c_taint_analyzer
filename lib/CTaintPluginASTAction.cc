@@ -1,3 +1,4 @@
+#include "c_taint/CTaintASTConsumer.hh"
 #include "c_taint/UnparserASTConsumer.hh"
 #include "clang/Frontend/CompilerInstance.h"
 #include "clang/Frontend/FrontendAction.h"
@@ -33,7 +34,10 @@ class PluginASTAction : public clang::PluginASTAction {
                           llvm::StringRef InFile) override {
                 (void)CI;
                 (void)InFile;
-                return std::make_unique<UnparserASTConsumer>();
+                if (Unparse) {
+                        return std::make_unique<UnparserASTConsumer>();
+                }
+                return std::make_unique<CTaintASTConsumer>();
         }
 
         clang::PluginASTAction::ActionType getActionType() override {
