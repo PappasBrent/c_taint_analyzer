@@ -49,5 +49,5 @@ int main(void) {
 // C_TAINT: | 0     | scanf("%d", &x)                | {x}                            |
 // C_TAINT: | 1     | y = x                          | {x, y}                         |
 // C_TAINT: | 2     | y = 5                          | {x}                            |
-// C_TAINT: | 3     | return 0                       | {x}                             |
+// C_TAINT: | 3     | return 0                       | {x}                            |
 // C_TAINT: |-------|--------------------------------|--------------------------------|
