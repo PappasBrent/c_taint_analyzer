@@ -132,7 +132,7 @@ sudo apt install clang-format
 
 Please follow the instructions listed in the [Development](#development) section
 to install `clang-format` before running the project's tests, because the
-unparser tests rely on it to accidental failures due to whitespace.
+unparser tests rely on it to avoid accidental failures due to whitespace.
 
 To run the taint analyzer and unparsers' tests, first configure the project,
 then build the its `check-c-taint` target like so:
