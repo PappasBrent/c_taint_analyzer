@@ -1,6 +1,8 @@
 add_library(c_taint SHARED
+        Analyses.cc
         CTaintASTConsumer.cc
         CTaintPluginASTAction.cc
+        GrammarChecks.cc
         UnparserASTConsumer.cc
 )
 
