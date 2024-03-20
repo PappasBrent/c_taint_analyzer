@@ -450,7 +450,7 @@ void PrintBlockLabels(const BlockLabelMap &BL,
         }
 }
 
-void PrintInitLabelsTable(const Block *B, InitFunction &Init,
+void PrintInitTable(const Block *B, InitFunction &Init,
                           const clang::PrintingPolicy &PP) {
         if (Init.contains(B)) {
                 auto L = Init.at(B);
@@ -458,11 +458,11 @@ void PrintInitLabelsTable(const Block *B, InitFunction &Init,
                 llvm::outs() << " " << L << "\n";
         }
         for (auto Child : B->children()) {
-                PrintInitLabelsTable(Child, Init, PP);
+                PrintInitTable(Child, Init, PP);
         }
 }
 
-void PrintFinalsLabelsTable(const Block *B, FinalsFunction &Finals,
+void PrintFinalsTable(const Block *B, FinalsFunction &Finals,
                             const clang::PrintingPolicy &PP) {
         if (Finals.contains(B)) {
                 auto Ls = Finals.at(B);
@@ -479,7 +479,7 @@ void PrintFinalsLabelsTable(const Block *B, FinalsFunction &Finals,
                 llvm::outs() << "}\n";
         }
         for (auto Child : B->children()) {
-                PrintFinalsLabelsTable(Child, Finals, PP);
+                PrintFinalsTable(Child, Finals, PP);
         }
 }
 

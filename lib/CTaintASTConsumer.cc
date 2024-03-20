@@ -37,6 +37,21 @@ const clang::FunctionDecl *GetMainFunctionDecl(clang::ASTContext &Ctx) {
         return nullptr;
 }
 
+CTaintASTConsumer::CTaintASTConsumer(
+        bool ShouldPrintBlockLabels, bool ShouldPrintInitTable,
+        bool ShouldPrintFinalsTable, bool ShouldPrintFlowTable,
+        bool ShouldPrintKillTable, bool ShouldPrintGenTable,
+        bool ShouldPrintEntryTable, bool ShouldPrintExitTable)
+        : ShouldPrintBlockLabels(ShouldPrintBlockLabels)
+        , ShouldPrintInitTable(ShouldPrintInitTable)
+        , ShouldPrintFinalsTable(ShouldPrintFinalsTable)
+        , ShouldPrintFlowTable(ShouldPrintFlowTable)
+        , ShouldPrintKillTable(ShouldPrintKillTable)
+        , ShouldPrintGenTable(ShouldPrintGenTable)
+        , ShouldPrintEntryTable(ShouldPrintEntryTable)
+        , ShouldPrintExitTable(ShouldPrintExitTable) {
+}
+
 void CTaintASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
         auto TUD = Ctx.getTranslationUnitDecl();
         clang::SourceManager &SM = Ctx.getSourceManager();
@@ -58,31 +73,46 @@ void CTaintASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
         GetLabels(Body, LB, BL);
 
         /* Print blocks and their labels. */
-        // PrintBlockLabels(BL, PP);
+        if (ShouldPrintBlockLabels) {
+                PrintBlockLabels(BL, PP);
+                llvm::errs() << "\n\n";
+        }
 
         InitFunction Init;
         ComputeInit(Init, Body, LB, BL);
 
         /* Print init labels. */
-        // PrintInitLabelsTable(Body, Init, PP);
+        if (ShouldPrintInitTable) {
+                PrintInitTable(Body, Init, PP);
+                llvm::errs() << "\n\n";
+        }
 
         FinalsFunction Finals;
         ComputeFinals(Finals, Body, LB, BL);
 
         /* Print final labels. */
-        // PrintFinalsLabelsTable(Body, Finals, PP);
+        if (ShouldPrintFinalsTable) {
+                PrintFinalsTable(Body, Finals, PP);
+                llvm::errs() << "\n\n";
+        }
 
         FlowFunction Flow;
         ComputeFlow(Flow, Body, Init, Finals);
 
         /* Print flow. */
-        // PrintFlowTable(Body, Flow, PP);
+        if (ShouldPrintFlowTable) {
+                PrintFlowTable(Body, Flow, PP);
+                llvm::errs() << "\n\n";
+        }
 
         KillFunction Kill;
         ComputeKill(Kill, Body);
 
         /* Print kill. */
-        // PrintKillTable(Body, Kill, PP);
+        if (ShouldPrintKillTable) {
+                PrintKillTable(Body, Kill, PP);
+                llvm::errs() << "\n\n";
+        }
 
         GenFunction Gen;
 
@@ -97,9 +127,19 @@ void CTaintASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
 
         ComputeLeastFixedPoint(Body, Entry, Exit, Gen, LB, BL, Flow, Kill);
 
+        /* Print gen. */
+        if (ShouldPrintGenTable) {
+                PrintGenTable(Body, Gen, PP);
+                llvm::errs() << "\n\n";
+        }
+
         /* Print the least solution. */
-        PrintEntryOrExitTable(Body, Entry, "Entry(Label)", BL, PP);
-        llvm::errs() << "\n\n";
-        PrintEntryOrExitTable(Body, Exit, "Exit(Label)", BL, PP);
+        if (ShouldPrintEntryTable) {
+                PrintEntryOrExitTable(Body, Entry, "Entry(Label)", BL, PP);
+                llvm::errs() << "\n\n";
+        }
+        if (ShouldPrintExitTable) {
+                PrintEntryOrExitTable(Body, Exit, "Exit(Label)", BL, PP);
+        }
 }
 }
