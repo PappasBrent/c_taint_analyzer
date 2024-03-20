@@ -87,7 +87,7 @@ void CTaintASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
         GenFunction Gen;
 
         /* Initialize the entry and exit functions to the greatest solution (in
-        this the empty set.) */
+        this case the empty set.) */
         EntryFunction Entry;
         ExitFunction Exit;
         for (auto [L, _] : LB) {
