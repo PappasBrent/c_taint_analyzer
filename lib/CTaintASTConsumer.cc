@@ -97,9 +97,6 @@ void CTaintASTConsumer::HandleTranslationUnit(clang::ASTContext &Ctx) {
 
         ComputeLeastFixedPoint(Body, Entry, Exit, Gen, LB, BL, Flow, Kill);
 
-        // PrintGenTable(Body, Gen, PP);
-        // llvm::errs() << "\n\n";
-
         /* Print the least solution. */
         PrintEntryOrExitTable(Body, Entry, "Entry(Label)", BL, PP);
         llvm::errs() << "\n\n";
