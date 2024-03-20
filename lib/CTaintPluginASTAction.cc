@@ -7,7 +7,6 @@
 #include <memory>
 
 namespace c_taint {
-
 class PluginASTAction : public clang::PluginASTAction {
     public:
         bool Unparse = false;

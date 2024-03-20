@@ -2,7 +2,6 @@
 #include "clang/AST/Expr.h"
 
 namespace c_taint {
-
 bool CheckSanitizerDefinition(const clang::FunctionDecl &FD) {
         if (!FD.getReturnType()->isVoidType()) {
                 llvm::errs() << "error: sanitize() should return void\n";
