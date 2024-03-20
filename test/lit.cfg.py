@@ -50,13 +50,14 @@ config.c_taint_tools_dir = os.path.join(config.c_taint_obj_root, "bin")
 tools = [
     ToolSubst(
         "unparse",
-        f"clang-17 -fplugin={config.c_taint_obj_root}/lib/libc_taint.so "
-        "-fsyntax-only -Xclang -plugin-arg-c_taint_analyzer -Xclang --unparse",
+        f"clang-17 -fplugin={config.c_taint_obj_root}/lib/libc_taint.so"
+        " -fsyntax-only"
+        " -Xclang -plugin-arg-c_taint_analyzer -Xclang --unparse",
     ),
     ToolSubst(
         "c_taint",
-        f"clang-17 -fplugin={config.c_taint_obj_root}/lib/libc_taint.so "
-        "-fsyntax-only -Xclang -plugin-arg-c_taint_analyzer",
+        f"clang-17 -fplugin={config.c_taint_obj_root}/lib/libc_taint.so"
+        " -fsyntax-only",
     ),
     ToolSubst("FileCheck", config.file_check_path),
 ]
