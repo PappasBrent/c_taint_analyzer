@@ -1,4 +1,5 @@
 // RUN: unparse %s | clang-format | FileCheck %s --color --check-prefix=UNPARSE
+// RUN: c_taint %s | FileCheck %s --color --check-prefix=C_TAINT
 
 #include <stdio.h>
 
@@ -41,7 +42,7 @@ int main(void) {
 // C_TAINT: | 0     | scanf("%d", &x)                | {}                             |
 // C_TAINT: | 1     | y = x                          | {x}                            |
 // C_TAINT: | 2     | y = 5                          | {x, y}                         |
-// C_TAINT: | 3     | return 0                       | {x}                            |
+// C_TAINT: | 3     | return 0;                      | {x}                            |
 // C_TAINT: |-------|--------------------------------|--------------------------------|
 // C_TAINT: |-------|--------------------------------|--------------------------------|
 // C_TAINT: | Label | Block                          | Exit(Label)                    |
@@ -49,5 +50,5 @@ int main(void) {
 // C_TAINT: | 0     | scanf("%d", &x)                | {x}                            |
 // C_TAINT: | 1     | y = x                          | {x, y}                         |
 // C_TAINT: | 2     | y = 5                          | {x}                            |
-// C_TAINT: | 3     | return 0                       | {x}                            |
+// C_TAINT: | 3     | return 0;                      | {x}                            |
 // C_TAINT: |-------|--------------------------------|--------------------------------|

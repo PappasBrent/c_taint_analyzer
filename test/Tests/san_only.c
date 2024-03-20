@@ -1,4 +1,5 @@
 // RUN: unparse %s | clang-format | FileCheck %s --color --check-prefix=UNPARSE
+// RUN: c_taint %s | FileCheck %s --color --check-prefix=C_TAINT
 
 #include <stdio.h>
 
@@ -33,11 +34,11 @@ int main(void) {
 // C_TAINT: | Label | Block                          | Entry(Label)                   |
 // C_TAINT: |-------|--------------------------------|--------------------------------|
 // C_TAINT: | 0     | sanitize(&x)                   | {}                             |
-// C_TAINT: | 1     | return 0                       | {}                             |
+// C_TAINT: | 1     | return 0;                      | {}                             |
 // C_TAINT: |-------|--------------------------------|--------------------------------|
 // C_TAINT: |-------|--------------------------------|--------------------------------|
 // C_TAINT: | Label | Block                          | Exit(Label)                    |
 // C_TAINT: |-------|--------------------------------|--------------------------------|
 // C_TAINT: | 0     | sanitize(&x)                   | {}                             |
-// C_TAINT: | 1     | return 0                       | {}                             |
+// C_TAINT: | 1     | return 0;                      | {}                             |
 // C_TAINT: |-------|--------------------------------|--------------------------------|
