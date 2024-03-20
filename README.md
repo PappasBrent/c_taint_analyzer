@@ -113,6 +113,41 @@ follows:
 clang-17 -fplugin=build/lib/libc_taint.so -fsyntax-only some/program.c
 ```
 
+### Taint analyzer arguments
+
+By default, the taint analyzer will only print the program's entry and exit
+functions. You can modify this output with the following arguments:
+
+| Argument               | Description                                    |
+|------------------------|------------------------------------------------|
+| `--print-block-labels` | Print blocks and their labels.                 |
+| `--print-init`         | Print blocks init labels.                      |
+| `--print-finals`       | Print block final labels.                      |
+| `--print-flow`         | Print block flows.                             |
+| `--print-kill`         | Print each block's set of killed variables.    |
+| `--print-gen`          | Print each block's set of generated variables. |
+| `--print-entry`        | Print the entry function for each block.       |
+| `--print-exit`         | Print the exit function for each block.        |
+
+For example:
+
+```bash
+clang-17 -fplugin=build/lib/libc_taint.so -fsyntax-only some/program.c -Xclang -plugin-arg-c_taint_analyzer -Xclang --print-block-labels
+```
+
+The above command tells the taint analyzer to print the program's blocks and
+labels as well.
+
+You can also prepend an argument with `no` to tell the taint analyzer not to
+print a field in the output. For example:
+
+```bash
+clang-17 -fplugin=build/lib/libc_taint.so -fsyntax-only some/program.c -Xclang -plugin-arg-c_taint_analyzer -Xclang --no-print-entry
+```
+
+The above command tells the taint analyzer not to print the entry function for
+each block.
+
 ## Development
 
 We recommend downloading the [`clangd`](https://clangd.llvm.org/installation)

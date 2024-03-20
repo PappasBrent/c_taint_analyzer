@@ -55,11 +55,11 @@ void ComputeLeastFixedPoint(Block *B, EntryFunction &Entry, ExitFunction &Exit,
 void PrintBlockLabels(const BlockLabelMap &BL, const clang::PrintingPolicy &PP);
 
 /* Prints the init labels for each block in a table. */
-void PrintInitLabelsTable(const Block *B, InitFunction &Init,
+void PrintInitTable(const Block *B, InitFunction &Init,
                           const clang::PrintingPolicy &PP);
 
 /* Prints the finals labels for each block in a table. */
-void PrintFinalsLabelsTable(const Block *B, FinalsFunction &Finals,
+void PrintFinalsTable(const Block *B, FinalsFunction &Finals,
                             const clang::PrintingPolicy &PP);
 
 /* Prints the flow for each block in a table. */
