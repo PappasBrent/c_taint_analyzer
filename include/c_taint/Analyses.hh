@@ -3,6 +3,7 @@
 #include "c_taint/types.hh"
 
 namespace c_taint {
+/* Generates a fresh label. */
 Label FreshLabel(void);
 
 /* Computes the labels for the given stmt, and nested stmts for compound, if,
